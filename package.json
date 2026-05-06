@@ -1,0 +1,50 @@
+{
+  "name": "@eswact/datatable-visibility-settings",
+  "version": "1.0.0",
+  "description": "Column visibility and reorder helper for jQuery DataTables.",
+  "main": "src/scripts/shared.js",
+  "types": "src/scripts/shared.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/scripts/shared.d.ts",
+      "default": "./src/scripts/shared.js"
+    }
+  },
+  "files": [
+    "src/scripts/shared.js",
+    "src/scripts/shared.d.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "datatable",
+    "datatables",
+    "jquery",
+    "visibility",
+    "colreorder",
+    "sortablejs",
+    "plugin"
+  ],
+  "author": "Eswact",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eswact/datatable-visibility-settings.git"
+  },
+  "homepage": "https://github.com/Eswact/datatable-visibility-settings#readme",
+  "bugs": {
+    "url": "https://github.com/Eswact/datatable-visibility-settings/issues"
+  },
+  "scripts": {
+    "pack:check": "npm pack --dry-run"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "jquery": ">=3.6.0",
+    "datatables.net": ">=1.13.7",
+    "datatables.net-colreorder": ">=1.6.2",
+    "sortablejs": ">=1.15.0"
+  }
+}

@@ -49,15 +49,7 @@ columnDefs = tableColumns.map(function (column) {
     return { "name": column.name, "targets": column.id };
 });
 
-// User Prefs
-var orderPref = [];
-(getlocalstorage('orderPref'))
-    ? orderPref = getlocalstorage('orderPref')
-    : $(tableColumns).each(function (index, column) { orderPref.push(column.id) });
-var visibilityPref = {};
-(getlocalstorage('visibilityPref')) 
-    ? visibilityPref = getlocalstorage('visibilityPref')
-    : $(tableColumns).each(function (index, column) { visibilityPref[column.name] = true; });
+var visibilitySettings;
 
 // Create Table
 $(document).ready(function () {
@@ -141,7 +133,7 @@ $(document).ready(function () {
         ],
         columnDefs: columnDefs,
         colReorder: {
-            order: orderPref,
+            order: tableColumns.map(function (column) { return column.id; }),
         },
         fnInitComplete: function () {
             //Datatable Toolbar
@@ -150,44 +142,25 @@ $(document).ready(function () {
                                 <button class="toolbarButs"><i class="fa-solid fa-magnifying-glass"></i> <span class="mobile-invis">Filters<span></button>
                             </div>`;
             $('div.toolbar').html(`<div style="display:flex; gap:10px;"> ${toolbar} </div>`);
-            //Visibility Settings
+
+            visibilitySettings = new DataTableVisibilitySettings({
+                table: stokTable,
+                columns: tableColumns,
+                storageKey: 'datatable-visibility-demo',
+                theme: {
+                    accentColor: 'rgb(238, 96, 95)',
+                    accentSoftColor: 'rgba(238, 96, 95, 0.2)'
+                },
+                onSave: function (state) {
+                    console.log('Saved state:', state);
+                }
+            });
+
             $(".vs-btn").off('click').on('click', function () {
-                SetVsColumns(stokTable, tableColumns, orderPref, visibilityPref);
-                visSettingsOpen();
+                visibilitySettings.open();
             });
-            $(".vs-save").off('click').on('click', function () {
-                //visibility
-                setColumnVisibility(stokTable, tableColumns);
-                //order
-                orderPref = setColumnOrder(stokTable, orderPref);
-                //close modal
-                visSettingsClose();
-                //setPrefs
-                SetUserPrefs(visibilityPref, orderPref);
-            });
-            $(".vs-default").click(function () {
-                //visibility
-                $(".vs-columns input[type='checkbox']").prop('checked', true);
-                setColumnVisibility(stokTable, tableColumns);
-                //order
-                orderPref = setDefaultColumnOrder(stokTable, orderPref);
-                //close modal
-                visSettingsClose();
-                //setPrefs
-                SetUserPrefs(visibilityPref, orderPref);
-            });
-            //Start
-            SetVsColumns(stokTable, tableColumns, orderPref, visibilityPref);
-            setColumnVisibility(stokTable, tableColumns);
+
             resetColReorderMD('#customers');
-    
-            //Draggable
-            let drag = document.querySelector('#visibility-settings ul');
-            new Sortable(drag, {
-                animation: 150,
-                handle: '#visibility-settings ul li i',
-                forceFallback: true
-            });
         },
         // language: {
         //     info: "_TOTAL_ kayıttan _START_ - _END_ kayıt gösteriliyor.",
