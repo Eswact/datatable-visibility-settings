@@ -103,6 +103,30 @@ plugin.open();
 - `setState()`
 - `destroy()`
 
+## All options
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `table` | DataTable instance | — | Required. The DataTables instance. |
+| `columns` | array | `[]` | Column definitions (`id`, `name`, `title`, `check`). |
+| `storageKey` | string | `'datatable-visibility-settings'` | localStorage key for persisted state. |
+| `persist` | boolean | `true` | Whether to save/restore state via storage. |
+| `enableDrag` | boolean | `true` | Enable drag-to-reorder rows in the modal. |
+| `enableVisibility` | boolean | `true` | Enable checkbox visibility toggles in the modal. |
+| `fixedColumns` | array | `[]` | Column ids that cannot be hidden or reordered. |
+| `excludedColumns` | array | `[]` | Column ids hidden from the modal entirely. |
+| `defaultState` | object | `{}` | Initial `{ order, visibility }` when no stored state exists. |
+| `theme` | object | — | Theme overrides (colors, z-index). |
+| `texts` | object | — | Label overrides (title, subtitle, save, reset). |
+| `classPrefix` | string | `'dtvs'` | CSS class namespace. |
+| `storage` | object | localStorage | Custom storage adapter with `get/set/remove`. |
+| `renderOptionRow` | function | `null` | Custom renderer for each column row in the modal. |
+| `onOpen` | function | `null` | Called when modal opens. |
+| `onChange` | function | `null` | Called when order or visibility changes. |
+| `onSave` | function | `null` | Called when the save button is clicked. |
+| `onReset` | function | `null` | Called when reset is triggered. |
+| `onError` | function | `null` | Called on errors. |
+
 ## Customization points
 
 - `theme` (colors/z-index)
